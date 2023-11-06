@@ -1,0 +1,38 @@
+# Default values for tailscale-router.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/tailscale/tailscale
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+serviceAccount:
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "tailscale-router"
+
+secrets:
+  create: true
+  # If not set and create is true, a name is generated using the fullname template
+  nameAuth: "tailscale-auth"
+  nameRoutes: "tailscale-routes"
+  nameExtraArgs: "tailscale-extra-args"
+
+podAnnotations: {}
+
+nodeSelectorArchitecture: amd64 # internal node group
+
+extraArgs:
+  us-east-1: "--hostname roteador-us-east-1"
+
+routes:
+  us-east-1: "10.0.0.0/16,2400:1f18:4000:6000::/56"
+
+config: "us-east-1"
